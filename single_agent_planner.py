@@ -100,11 +100,7 @@ def is_goal_constrained(curr_loc, next_loc, curr_time, constraint_table):
     for c in constraint_table:
             if (len(c["loc"])==1 and c["loc"][0] == curr_loc):
                 if (c["timestep"] >= curr_time):
-                    print("is_goal_constrained, curr_time ")
-                    print(curr_time)
                     return 1
-    print("not constrained goal, curr time")
-    print(curr_time)
     return 0
 
 def push_node(open_list, node):
@@ -164,10 +160,8 @@ def a_star(my_map, start_loc, goal_loc, h_values, agent, constraints):
                     'h_val': h_values[child_loc],
                     'parent': curr}
             if (child['loc'], child['timestep']) in closed_list:
-                print("child location already in. (child['loc']) in closed_list")
                 existing_node = closed_list[(child['loc'], child['timestep'])]
                 if compare_nodes(child, existing_node):
-                    print("the child is better, so add him compare_nodes(child, existing_node)")
                     closed_list[(child['loc'], child['timestep'])] = child
                     if child in open_list:
                         print("child location already in. (child['loc']) in open_list")

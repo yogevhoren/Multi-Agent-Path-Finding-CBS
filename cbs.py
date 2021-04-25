@@ -13,13 +13,8 @@ def detect_collision(path1, path2):
     #           You should use "get_location(path, t)" to get the location of a robot at time t.
     for t in range(max(len(path1), len(path2))):
         if get_location(path1, t) == get_location(path2, t):
-            print("vertex collision, get_location(path1, t) == get_location(path2, t)")
-            print(get_location(path1, t))
             return {'loc': [get_location(path1, t)], 'timestep': t}
         if get_location(path1, t+1) == get_location(path2, t) and get_location(path1, t) == get_location(path2, t+1):
-            print("edge collision, get_location(path1, t) == get_location(path2, t)")
-            print(get_location(path1, t))
-            print(get_location(path2, t))
             return {'loc': [get_location(path1, t), get_location(path2, t)], 'timestep': t + 1}
     return None
 
@@ -36,10 +31,8 @@ def detect_collisions(paths):
         for index_path2 in range(len(paths)):
             if index_path1 != index_path2:
                 dc = detect_collision(paths[index_path1], paths[index_path2])
-                print(dc)
                 if dc != None:
                     list_detect_collisions.append({'a1': index_path1, 'a2': index_path2, 'loc': dc['loc'], 'timestep': dc['timestep']})
-    print(list_detect_collisions)
     return list_detect_collisions
 
 
@@ -52,7 +45,6 @@ def standard_splitting(collision):
     #           Edge collision: the first constraint prevents the first agent to traverse the specified edge at the
     #                          specified timestep, and the second constraint prevents the second agent to traverse the
     #                          specified edge at the specified timestep
-    print()
     if len(collision['loc']) == 1:
         return [{'agent': collision['a1'], 'loc': collision['loc'], 'timestep': collision['timestep']},
                 {'agent': collision['a2'], 'loc': collision['loc'], 'timestep': collision['timestep']}]
@@ -159,7 +151,6 @@ class CBSSolver(object):
         while len(self.open_list) > 0:
             p = self.pop_node()
             if len(p['collisions']) == 0:
-                print(p['paths'])
                 self.print_results(p)
                 return p['paths']
             collision = p['collisions'].pop()
